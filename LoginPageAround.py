@@ -1,35 +1,33 @@
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 
 class LoginPageAround:
-    # Paso 2. Define el localizador del campo Correo electrónico
-    email_field = [By.ID, 'email']
-    # Define el localizador del campo Contraseña
-    password_field = [By.ID, 'password']
+    # El localizador del campo Correo electrónico
+    email_field = (By.ID, 'email')
+    # El localizador del campo Contraseña
+    password_field = (By.ID, 'password')
+    # El localizador del botón Iniciar sesión
+    sign_in_button = (By.CLASS_NAME, 'auth-form__button')
+    # Agrega aquí un localizador para el botón Registrarse
+    register_button = (By.CLASS_NAME, 'auth-form__button')
 
-    # Paso 3. Agrega el constructor de clase
+    # El constructor de clase
     def __init__(self, driver):
-        self.driver = driver  # Inicializa los atributos
+        self.driver = driver
 
-    # Paso 4. Agrega interacciones como métodos
-    # El metodo rellena el campo Correo electrónico
-    def set_email(self, email):
-        self.driver.find_element(*self.email_field).send_keys(email)
+    # El metodo comprueba si se puede hacer clic en el botón Iniciar sesión
+    def check_sign_in_is_enabled(self):
+        return self.driver.find_element(*self.sign_in_button).is_enabled()
 
-    # El metodo rellena el campo Contraseña
-    def set_password(self, password):
-        self.driver.find_element(*self.password_field).send_keys(password)
+    # El metodo hace clic en el botón Iniciar sesión
+    def click_sign_in_button(self):
+        self.driver.find_element(*self.sign_in_button).click()
 
-    # Paso 5. Agrega los casos de prueba
-    # El metodo comprueba Correo electrónico contenga los datos de entrada pasados
-    def check_email_value(self, email):
-        actual_value = self.driver.find_element(*self.email_field).get_property("value")
-        expected_value = email
-        assert actual_value == expected_value, f'Valor esperado de Correo electrónico: "{expected_value}", valor actual: "{actual_value}"'
+    # El metodo hace clic en el botón Registrarse
+    def click_registration_button(self):
+        self.driver.find_element(*self.register_button).click()
 
-    # El metodo comprueba que Contraseña contenga los datos de entrada pasados
-    def check_password_value(self, password):
-        actual_value = self.driver.find_element(*self.password_field).get_property("value")
-        expected_value = password
-        assert actual_value == expected_value, f'Valor esperado de Contraseña: "{expected_value}", valor actual: "{actual_value}"'
+    # El metodo valida el texto en el botón Registrarse
+    def check_text_registration_button(self):
+        registration_button_text = self.driver.find_element(*self.register_button).text
+        assert registration_button_text == "Registrarse"
