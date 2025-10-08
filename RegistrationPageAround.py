@@ -1,20 +1,16 @@
 from selenium.webdriver.common.by import By
 
-class LoginPageAround:
+class RegistrationPageAround:
     # El localizador del campo Correo electrónico
     email_field = (By.ID, 'email')
     # El localizador del campo Contraseña
     password_field = (By.ID, 'password')
-    # El localizador del botón Iniciar sesión
-    sign_in_button = (By.CLASS_NAME, 'auth-form__button')
+    # El localizador del botón Registrarse
+    registration_button = (By.CLASS_NAME, 'auth-form__button')
 
     # El constructor de clase
     def __init__(self, driver):
         self.driver = driver
-
-    # El metodo comprueba si se puede hacer clic en el botón Iniciar sesión
-    def check_sign_in_is_enabled(self):
-        return self.driver.find_element(*self.sign_in_button).is_enabled()
 
     # El metodo rellena el campo Correo electrónico
     def set_email(self, email):
@@ -24,13 +20,12 @@ class LoginPageAround:
     def set_password(self, password):
         self.driver.find_element(*self.password_field).send_keys(password)
 
-    # El metodo hace clic en el botón Iniciar sesión
-    def click_sign_in_button(self):
-        self.driver.find_element(*self.sign_in_button).click()
+    # El metodo hace clic en el botón Registrarse
+    def click_registration_button(self):
+        self.driver.find_element(*self.registration_button).click()
 
-    # El metodo de inicio de sesión combina el correo electrónico, la contraseña y el clic del botón
-    # Este es el paso
-    def login(self, email, password):
+    # El metodo de registro: combina el correo electrónico, la contraseña y el clic
+    def register(self, email, password):
         self.set_email(email)
         self.set_password(password)
-        self.click_sign_in_button()
+        self.click_registration_button()
