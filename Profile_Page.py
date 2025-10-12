@@ -7,6 +7,7 @@ class Profile_Page:
     profile_description_field = (By.ID, 'owner-description')
     #Se utiliza el punto por que la clase se sepran y se toma como 2 clases, la clase es button popup__button
     button_save = (By.CLASS_NAME, 'button.popup__button')
+    profile_description = (By.CLASS_NAME, 'profile__description')
 
     def __init__(self, driver):
         self.driver = driver
@@ -15,6 +16,11 @@ class Profile_Page:
         WebDriverWait(self.driver, 10).until(
             expected_conditions.element_to_be_clickable(self.profile_edit_button)
         ).click()
+
+    def delete_description(self):
+        WebDriverWait(self.driver, 10).until(
+            expected_conditions.presence_of_element_located(self.profile_description_field)
+        ).clear()
 
     def set_description(self, description):
         WebDriverWait(self.driver, 10).until(
@@ -25,5 +31,11 @@ class Profile_Page:
         WebDriverWait(self.driver, 10).until(
             expected_conditions.element_to_be_clickable(self.button_save)
         ).click()
+
+    def get_description(self):
+        element = WebDriverWait(self.driver, 10).until(
+            expected_conditions.visibility_of_element_located(self.profile_description)
+        )
+        return element.text
 
 

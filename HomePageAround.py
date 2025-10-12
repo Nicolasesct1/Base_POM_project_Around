@@ -1,4 +1,6 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
 
 class HomePageAround:
     # El localizador del botón Agregar
@@ -9,6 +11,7 @@ class HomePageAround:
     link_to_picture_field = (By.NAME, 'link')
     # El localizador del botón Guardar
     save_button = (By.XPATH, ".//form[@name='new-card']/button[text()='Guardar']")
+    header_email = (By.CLASS_NAME, 'header__user')
 
     def __init__(self, driver):
         self.driver = driver
@@ -36,3 +39,9 @@ class HomePageAround:
         self.set_name()
         self.set_link_to_picture_field()
         self.click_save_button()
+
+    def check_head_email(self):
+        element = WebDriverWait(self.driver, 10).until(
+            expected_conditions.presence_of_element_located(self.header_email)
+        )
+        return element.text
