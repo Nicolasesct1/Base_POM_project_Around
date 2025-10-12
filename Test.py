@@ -2,6 +2,7 @@
 from selenium import webdriver
 # Importa la clase de la página de inicio de sesión
 from LoginPageAround import LoginPageAround
+from Profile_Page import Profile_Page
 
 class Test:
     driver = None
@@ -17,6 +18,12 @@ class Test:
         login_page = LoginPageAround(self.driver)
         # Iniciar sesión
         login_page.login('hola0@gmail.com', 'Pruebas123')
+
+    def test_edit_description(self):
+        profile_page = Profile_Page(self.driver)
+        profile_page.click_profile_edit_button()
+        profile_page.set_description('Hola')
+        profile_page.click_button_save()
 
     @classmethod
     def teardown_class(cls):
