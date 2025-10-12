@@ -1,4 +1,6 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
 
 class LoginPageAround:
     # El localizador del campo Correo electrónico
@@ -14,22 +16,29 @@ class LoginPageAround:
 
     # El metodo comprueba si se puede hacer clic en el botón Iniciar sesión
     def check_sign_in_is_enabled(self):
-        return self.driver.find_element(*self.sign_in_button).is_enabled()
+        return WebDriverWait(self.driver, 10).until(
+            expected_conditions.presence_of_element_located(self.sign_in_button)
+        ).is_enabled()
 
     # El metodo rellena el campo Correo electrónico
     def set_email(self, email):
-        self.driver.find_element(*self.email_field).send_keys(email)
+        WebDriverWait(self.driver, 10).until(
+            expected_conditions.presence_of_element_located(self.email_field)
+        ).send_keys(email)
 
     # El metodo rellena el campo Contraseña
     def set_password(self, password):
-        self.driver.find_element(*self.password_field).send_keys(password)
+        WebDriverWait(self.driver, 10).until(
+            expected_conditions.presence_of_element_located(self.password_field)
+        ).send_keys(password)
 
     # El metodo hace clic en el botón Iniciar sesión
     def click_sign_in_button(self):
-        self.driver.find_element(*self.sign_in_button).click()
+        WebDriverWait(self.driver, 10).until(
+            expected_conditions.element_to_be_clickable(self.sign_in_button)
+        ).click()
 
     # El metodo de inicio de sesión combina el correo electrónico, la contraseña y el clic del botón
-    # Este es el paso
     def login(self, email, password):
         self.set_email(email)
         self.set_password(password)
